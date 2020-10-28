@@ -16,8 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="SimpleRPG"
-run/main_scene="res://Main.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://Scenes/Main.tscn"
 
 [display]
 
@@ -31,4 +30,3 @@ window/stretch/aspect="keep"
 [rendering]
 
 quality/2d/use_pixel_snap=true
-environment/default_environment="res://default_env.tres"
