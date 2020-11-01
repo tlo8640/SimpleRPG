@@ -59,8 +59,6 @@ func _input(event):
 		attack_playing = true
 		var animation = get_aninmation_direction(last_direction) + "_fireball"
 		$Sprite.play(animation)
-	
-
 
 func _on_Sprite_animation_finished():
 	attack_playing = false
