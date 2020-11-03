@@ -1,10 +1,22 @@
 extends KinematicBody2D
 
+signal death
+
 # Node reference
 var player
 
 # random number generator
 var rng = RandomNumberGenerator.new()
+
+# skeleton stats
+var health = 100
+var health_max = 100
+var health_regeneration = 1
+
+# attack variables
+var attack_damage = 10
+var attack_cooldown_time = 1500
+var next_attack_time = 0
 
 # movement variables
 export var speed = 25
@@ -16,6 +28,7 @@ var other_animation_playing = false
 func _ready():
 	player = get_tree().root.get_node("Root/Player")
 	rng.randomize()
+	$AnimatedSprite.set_modulate(Color(1,1,1,1))
 	
 	
 
@@ -41,6 +54,7 @@ func _on_Timer_timeout():
 		bounce_countdown = bounce_countdown - 1
 
 func _physics_process(delta):
+	health = min(health + health_regeneration * delta, health_max)
 	var movement = direction * speed * delta
 	var collision = move_and_collide(movement)
 	if collision != null and collision.collider.name != "Player":
@@ -48,7 +62,24 @@ func _physics_process(delta):
 		bounce_countdown = rng.randi_range(2, 5)
 	if not other_animation_playing:
 		animates_monster(direction)
-		
+	# turn raycast towards skeleton movement direction
+	if direction != Vector2.ZERO:
+		$RayCast2D.cast_to = direction.normalized() * 16
+	
+func _process(delta):
+	var now = OS.get_ticks_msec()
+	if now >= next_attack_time:
+		# what's the target?
+		var target = $RayCast2D.get_collider()
+		if target != null and target.name == "Player" and player.health > 0:
+			# play attack animation
+			other_animation_playing = true
+			var animation = get_aninmation_direction(last_direction) + "_attack"
+			$AnimatedSprite.play(animation)
+			# add cooldown time
+			next_attack_time = now + attack_cooldown_time
+	
+
 func get_aninmation_direction(direction: Vector2):
 	var norm_direction = direction.normalized()
 	if norm_direction.y >= 0.707:
@@ -81,5 +112,26 @@ func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation == "birth":
 		$AnimatedSprite.animation = "down_idle"
 		$Timer.start()
+	elif $AnimatedSprite.animation == "death":
+		get_tree().queue_delete(self)
 	other_animation_playing = false
 
+func hit(damage):
+	health -= damage
+	if health > 0:
+		$AnimationPlayer.play("Hit")
+	else:
+		$Timer.stop()
+		direction = Vector2.ZERO
+		set_process(false)
+		other_animation_playing = true
+		$AnimatedSprite.play("death")
+		emit_signal("death")
+
+
+func _on_AnimatedSprite_frame_changed():
+	if $AnimatedSprite.animation.ends_with("_attack") and $AnimatedSprite.frame == 1:
+		var target = $RayCast2D.get_collider()
+		if target != null and target.name == "Player" and player.health > 0:
+			player.hit(attack_damage)
+			

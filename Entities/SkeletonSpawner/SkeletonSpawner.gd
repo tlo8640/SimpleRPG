@@ -18,6 +18,8 @@ func instance_skeleton():
 	# instance scene
 	var skeleton = skeleton_scene.instance()
 	add_child(skeleton)
+	# connect skeleton death signal to the spawner
+	skeleton.connect("death", self, "_on_Skeleton_death")
 	
 	# place skeleton 
 	var valid_position = false
@@ -62,3 +64,6 @@ func _on_Timer_timeout():
 		instance_skeleton()
 		skeleton_count += 1
 
+func _on_Skeleton_death():
+	skeleton_count -= 1
+	

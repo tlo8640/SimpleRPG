@@ -17,8 +17,14 @@ var mana = 100
 var mana_max = 100
 var mana_regenration = 2
 
+# attack variables
+var attack_cooldown_time = 1000
+var next_attack_time = 0
+var attack_damage = 30
+
 func _ready():
 	emit_signal("player_stats_changed", self)
+	$Sprite.set_modulate(Color(1,1,1,1))
 
 func _process(delta):
 	# regenerate mana
@@ -49,6 +55,9 @@ func _physics_process(delta):
 	# animate player
 	if not attack_playing:
 		animates_player(direction)
+	# point raycast2d towards player movement direction
+	if direction != Vector2.ZERO:
+		$RayCast2D.cast_to = direction.normalized() * 8
 
 func animates_player(direction: Vector2):
 	if direction != Vector2.ZERO:
@@ -78,9 +87,19 @@ func get_aninmation_direction(direction: Vector2):
 
 func _input(event):
 	if event.is_action_pressed("attack"):
-		attack_playing = true
-		var animation = get_aninmation_direction(last_direction) + "_attack"
-		$Sprite.play(animation)
+		var now = OS.get_ticks_msec()
+		if now >= next_attack_time:
+			# if something to attack?
+			var target = $RayCast2D.get_collider()
+			if target != null:
+				if target.name.find("skeleton"):
+					# hit skeleton
+					target.hit(attack_damage)
+			attack_playing = true
+			var animation = get_aninmation_direction(last_direction) + "_attack"
+			$Sprite.play(animation)
+			# add cooldown time
+			next_attack_time = now + attack_cooldown_time
 	elif event.is_action_pressed("fireball"):
 		if mana >= 25:
 			mana = mana - 25
@@ -91,5 +110,15 @@ func _input(event):
 
 func _on_Sprite_animation_finished():
 	attack_playing = false
+	
+func hit(damage):
+	health -= damage
+	emit_signal("player_stats_changed", self)
+	if health <= 0:
+		set_process(false)
+		$AnimationPlayer.play("Game Over")
+	else:
+		$AnimationPlayer.play("Hit")
+		
 	
 
