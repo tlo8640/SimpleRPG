@@ -42,11 +42,6 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 17 ), ExtResource( 4 ), ExtResource( 27 ) ],
-"loop": false,
-"name": "right_fireball",
-"speed": 7.0
-}, {
 "frames": [ ExtResource( 1 ), ExtResource( 10 ), ExtResource( 5 ) ],
 "loop": false,
 "name": "down_attack",
@@ -107,6 +102,11 @@ animations = [ {
 "name": "up_walk",
 "speed": 10.0
 }, {
+"frames": [ ExtResource( 17 ), ExtResource( 4 ), ExtResource( 27 ) ],
+"loop": false,
+"name": "right_fireball",
+"speed": 7.0
+}, {
 "frames": [ ExtResource( 19 ), ExtResource( 13 ), ExtResource( 8 ) ],
 "loop": false,
 "name": "left_fireball",
@@ -126,7 +126,7 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5, 7.00001 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "Game Over"
 tracks/0/type = "value"
 tracks/0/path = NodePath("../CanvasLayer/GameOver:modulate")
@@ -141,8 +141,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "Hit"
+[sub_resource type="Animation" id=4]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
@@ -168,6 +167,7 @@ script = ExtResource( 2 )
 modulate = Color( 1, 0, 0, 1 )
 frames = SubResource( 1 )
 animation = "down_idle"
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -183,8 +183,8 @@ enabled = true
 cast_to = Vector2( 0, 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
-"anims/Game Over" = SubResource( 4 )
-anims/Hit = SubResource( 3 )
+"anims/Game Over" = SubResource( 3 )
+anims/Hit = SubResource( 4 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )

@@ -22,6 +22,12 @@ var attack_cooldown_time = 1000
 var next_attack_time = 0
 var attack_damage = 30
 
+# fireball variables
+var fireball_damage = 50
+var fireball_cooldown_time = 1000
+var next_fireball_time = 0
+var fireball_scene = preload("res://Entities/Fireball/Fireball.tscn")
+
 func _ready():
 	emit_signal("player_stats_changed", self)
 	$Sprite.set_modulate(Color(1,1,1,1))
@@ -101,15 +107,26 @@ func _input(event):
 			# add cooldown time
 			next_attack_time = now + attack_cooldown_time
 	elif event.is_action_pressed("fireball"):
-		if mana >= 25:
+		var now = OS.get_ticks_msec()
+		if mana >= 25 and now >= next_fireball_time:
 			mana = mana - 25
 			emit_signal("player_stats_changed", self)
 			attack_playing = true
 			var animation = get_aninmation_direction(last_direction) + "_fireball"
 			$Sprite.play(animation)
+			# add cooldown_time
+			next_fireball_time = now + fireball_cooldown_time
 
 func _on_Sprite_animation_finished():
 	attack_playing = false
+	# instantiate Fireball
+	if $Sprite.animation.ends_with("_fireball"):
+		var fireball = fireball_scene.instance()
+		fireball.attack_damage = fireball_damage
+		fireball.direction = last_direction.normalized()
+		fireball.position = position + last_direction.normalized() * 4
+		get_tree().root.get_node("Root").add_child(fireball)
+	
 	
 func hit(damage):
 	health -= damage
