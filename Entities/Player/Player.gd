@@ -17,6 +17,11 @@ var mana = 100
 var mana_max = 100
 var mana_regenration = 2
 
+# Player inventory
+enum Potion { HEALTH, MANA }
+var health_potions = 0
+var mana_potions = 0
+
 # attack variables
 var attack_cooldown_time = 1000
 var next_attack_time = 0
@@ -136,6 +141,10 @@ func hit(damage):
 		$AnimationPlayer.play("Game Over")
 	else:
 		$AnimationPlayer.play("Hit")
-		
-	
 
+func add_potion(type):
+	if type == Potion.HEALTH:
+		health_potions += 1
+	if type == Potion.MANA:
+		mana_potions += 1
+	emit_signal("player_stats_changed", self)

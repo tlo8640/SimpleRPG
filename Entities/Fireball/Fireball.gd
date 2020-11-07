@@ -15,12 +15,12 @@ func _on_Fireball_body_entered(body):
 	# ignore collision with player and water
 	if body.name == "Player":
 		return
-	if body.name == "TilemMap":
+	if body.name == "TileMap":
 		var cell_coord = tilemap.world_to_map(position)
 		var cell_type_id = tilemap.get_cellv(cell_coord)
 		if cell_type_id == tilemap.tile_set.find_tile_by_name("Water"):
 			return
-	# if fireball hizt skeleton call hit() function
+	# if fireball hits skeleton call hit() function
 	if body.name.find("Skeleton") >= 0:
 		body.hit(attack_damage)
 		
