@@ -25,9 +25,13 @@ var last_direction = Vector2(0, 1)
 var bounce_countdown = 0
 var other_animation_playing = false
 
+# refernece tp potion scene
+var potion_scene = preload("res://Entities/Potion/Potion.tscn")
+
 func _ready():
 	player = get_tree().root.get_node("Root/Player")
 	rng.randomize()
+	# set skeleton color to white
 	$AnimatedSprite.set_modulate(Color(1,1,1,1))
 	
 	
@@ -127,6 +131,7 @@ func hit(damage):
 		other_animation_playing = true
 		$AnimatedSprite.play("death")
 		emit_signal("death")
+		# 80 % probalitiy to drop something
 
 
 func _on_AnimatedSprite_frame_changed():
