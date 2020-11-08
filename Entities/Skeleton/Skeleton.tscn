@@ -39,6 +39,11 @@ animations = [ {
 "name": "down_attack",
 "speed": 3.0
 }, {
+"frames": [ ExtResource( 19 ), ExtResource( 1 ), ExtResource( 30 ), ExtResource( 29 ), ExtResource( 9 ), ExtResource( 13 ) ],
+"loop": false,
+"name": "death",
+"speed": 7.0
+}, {
 "frames": [ ExtResource( 15 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 18 ) ],
 "loop": true,
 "name": "left_walk",
@@ -97,11 +102,6 @@ animations = [ {
 "frames": [ ExtResource( 13 ), ExtResource( 9 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 1 ), ExtResource( 19 ) ],
 "loop": false,
 "name": "birth",
-"speed": 7.0
-}, {
-"frames": [ ExtResource( 19 ), ExtResource( 1 ), ExtResource( 30 ), ExtResource( 29 ), ExtResource( 9 ), ExtResource( 13 ) ],
-"loop": false,
-"name": "death",
 "speed": 7.0
 } ]
 

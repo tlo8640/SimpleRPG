@@ -132,6 +132,11 @@ func hit(damage):
 		$AnimatedSprite.play("death")
 		emit_signal("death")
 		# 80 % probalitiy to drop something
+		if rng.randf() <= 0.8:
+			var potion = potion_scene.instance()
+			potion.type = rng.randi()  % 2
+			get_tree().root.get_node("Root").call_deferred("add_child", potion)
+			potion.position = position
 
 
 func _on_AnimatedSprite_frame_changed():

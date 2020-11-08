@@ -121,6 +121,17 @@ func _input(event):
 			$Sprite.play(animation)
 			# add cooldown_time
 			next_fireball_time = now + fireball_cooldown_time
+	elif event.is_action_pressed("drink_health"):
+		if health_potions > 0:
+			health_potions -= 1
+			health = min(health + 50, health_max)
+			emit_signal("player_stats_changed", self)
+	elif event.is_action_pressed("drink_mana"):
+		if mana_potions > 0:
+			mana_potions -= 1
+			mana = min(mana + 50, mana_max)
+			emit_signal("player_stats_changed", self)
+
 
 func _on_Sprite_animation_finished():
 	attack_playing = false
