@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Entities/Player/player_down_attack_1.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Player/Player.gd" type="Script" id=2]
@@ -44,14 +44,10 @@
 [ext_resource path="res://GUI/XP.gd" type="Script" id=42]
 [ext_resource path="res://GUI/mana_bonus.png" type="Texture" id=43]
 [ext_resource path="res://GUI/health_bonus.png" type="Texture" id=44]
+[ext_resource path="res://GUI/LevelPopup.gd" type="Script" id=45]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 17 ), ExtResource( 4 ), ExtResource( 27 ) ],
-"loop": false,
-"name": "right_fireball",
-"speed": 7.0
-}, {
 "frames": [ ExtResource( 1 ), ExtResource( 10 ), ExtResource( 5 ) ],
 "loop": false,
 "name": "down_attack",
@@ -111,6 +107,11 @@ animations = [ {
 "loop": true,
 "name": "up_walk",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 4 ), ExtResource( 27 ) ],
+"loop": false,
+"name": "right_fireball",
+"speed": 7.0
 }, {
 "frames": [ ExtResource( 19 ), ExtResource( 13 ), ExtResource( 8 ) ],
 "loop": false,
@@ -373,24 +374,25 @@ custom_fonts/font = ExtResource( 37 )
 text = "GAME OVER"
 align = 1
 
-[node name="Popup" type="Popup" parent="CanvasLayer"]
+[node name="LevelPopup" type="Popup" parent="CanvasLayer"]
 pause_mode = 2
 visible = true
 margin_right = 100.0
 margin_bottom = 50.0
 popup_exclusive = true
+script = ExtResource( 45 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Popup"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/LevelPopup"]
 margin_right = 100.0
 margin_bottom = 50.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="CanvasLayer/Popup/ColorRect"]
+[node name="Label" type="Label" parent="CanvasLayer/LevelPopup/ColorRect"]
 margin_top = 1.0
 margin_right = 100.0
 margin_bottom = 11.0
@@ -400,15 +402,15 @@ custom_colors/font_color = Color( 0.352941, 0.352941, 0.352941, 1 )
 text = "New Level!"
 align = 1
 
-[node name="health" type="Sprite" parent="CanvasLayer/Popup/ColorRect"]
+[node name="health" type="Sprite" parent="CanvasLayer/LevelPopup/ColorRect"]
 position = Vector2( 31, 30 )
 texture = ExtResource( 44 )
 
-[node name="mana" type="Sprite" parent="CanvasLayer/Popup/ColorRect"]
+[node name="mana" type="Sprite" parent="CanvasLayer/LevelPopup/ColorRect"]
 position = Vector2( 69, 30 )
 texture = ExtResource( 43 )
 
-[node name="press_a" type="Label" parent="CanvasLayer/Popup/ColorRect"]
+[node name="press_a" type="Label" parent="CanvasLayer/LevelPopup/ColorRect"]
 margin_left = 7.0
 margin_top = 25.0
 margin_right = 13.0
@@ -417,7 +419,7 @@ custom_fonts/font = ExtResource( 37 )
 custom_colors/font_color = Color( 0.352941, 0.352941, 0.352941, 1 )
 text = "A"
 
-[node name="press_b" type="Label" parent="CanvasLayer/Popup/ColorRect"]
+[node name="press_b" type="Label" parent="CanvasLayer/LevelPopup/ColorRect"]
 margin_left = 88.0
 margin_top = 25.0
 margin_right = 94.0
@@ -425,8 +427,12 @@ margin_bottom = 35.0
 custom_fonts/font = ExtResource( 37 )
 custom_colors/font_color = Color( 0.352941, 0.352941, 0.352941, 1 )
 text = "B"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="SkeletonSpawner" parent="." instance=ExtResource( 39 )]
+[connection signal="player_level_up" from="Player" to="CanvasLayer/LevelPopup" method="_on_Player_player_level_up"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/Health" method="_on_Player_player_stats_changed"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/Mana" method="_on_Player_player_stats_changed"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/XP" method="_on_Player_player_stats_changed"]

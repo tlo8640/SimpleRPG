@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal player_stats_changed
+signal player_level_up
 
 # Player movement speed
 export var speed = 75
@@ -167,6 +168,11 @@ func add_potion(type):
 
 func add_xp(value):
 	xp += value
+	# enough xp for level up?
+	if xp >= xp_next_level:
+		level += 1
+		xp_next_level = xp_next_level * 2
+		emit_signal("player_level_up")
 	emit_signal("player_stats_changed", self)
 	
 	
