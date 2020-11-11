@@ -32,7 +32,7 @@ func close():
 	hide()
 	
 func _on_AnimationPlayer_animation_finished(anim_name):
-	set_process(true)
+	set_process_input(true)
 
 func _input(event):
 	if event is InputEventKey:

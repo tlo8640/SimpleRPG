@@ -109,9 +109,13 @@ func _input(event):
 			# if something to attack?
 			var target = $RayCast2D.get_collider()
 			if target != null:
-				if target.name.find("skeleton"):
+				if target.name.find("Skeleton") >= 0:
 					# hit skeleton
 					target.hit(attack_damage)
+				if target.is_in_group("NPCs"):
+					# talk
+					target.talk()
+					return
 			attack_playing = true
 			var animation = get_aninmation_direction(last_direction) + "_attack"
 			$Sprite.play(animation)
