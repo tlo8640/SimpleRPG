@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://Entities/Player/player_down_attack_1.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Player/Player.gd" type="Script" id=2]
@@ -48,6 +48,7 @@
 [ext_resource path="res://Entities/Fiona/Fiona.tscn" type="PackedScene" id=46]
 [ext_resource path="res://Entities/Necklace/Necklace.tscn" type="PackedScene" id=47]
 [ext_resource path="res://GUI/DialoguePopup.gd" type="Script" id=48]
+[ext_resource path="res://Sounds/mountain-trials.ogg" type="AudioStream" id=49]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -220,6 +221,12 @@ cast_to = Vector2( 0, 8 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
 "anims/Game Over" = SubResource( 3 )
 anims/Hit = SubResource( 4 )
+
+[node name="Music" type="AudioStreamPlayer" parent="Player"]
+pause_mode = 2
+stream = ExtResource( 49 )
+volume_db = -6.0
+autoplay = true
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
