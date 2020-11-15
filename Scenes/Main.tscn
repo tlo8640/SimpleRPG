@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://Entities/Player/player_down_attack_1.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Player/Player.gd" type="Script" id=2]
@@ -172,6 +172,22 @@ tracks/0/keys = {
 "values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
+[sub_resource type="Animation" id=6]
+resource_name = "Sleep"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../CanvasLayer/Sleep:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 2.6, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [sub_resource type="Animation" id=5]
 resource_name = "ShowDialogue"
 tracks/0/type = "value"
@@ -227,6 +243,7 @@ cast_to = Vector2( 0, 8 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
 "anims/Game Over" = SubResource( 3 )
 anims/Hit = SubResource( 4 )
+anims/Sleep = SubResource( 6 )
 
 [node name="Music" type="AudioStreamPlayer" parent="Player"]
 pause_mode = 2
@@ -599,6 +616,26 @@ text = "RESTART GAME"
 align = 1
 valign = 1
 
+[node name="Sleep" type="ColorRect" parent="CanvasLayer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 320.0
+margin_bottom = 180.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Sleep"]
+margin_top = 80.0
+margin_right = 320.0
+margin_bottom = 100.0
+rect_clip_content = false
+mouse_filter = 2
+custom_fonts/normal_font = ExtResource( 37 )
+bbcode_enabled = true
+bbcode_text = "[center][wave amp=40 freq=2]ZZZ...[/wave][/center]"
+text = "ZZZ..."
+
 [node name="SkeletonSpawner" parent="." instance=ExtResource( 39 )]
 
 [node name="Fiona" parent="." instance=ExtResource( 46 )]
@@ -612,8 +649,8 @@ position = Vector2( 384, 480 )
 [connection signal="player_level_up" from="Player" to="CanvasLayer/LevelPopup" method="_on_Player_player_level_up"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/Health" method="_on_Player_player_stats_changed"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/Mana" method="_on_Player_player_stats_changed"]
-[connection signal="player_stats_changed" from="Player" to="CanvasLayer/XP" method="_on_Player_player_stats_changed"]
-[connection signal="player_stats_changed" from="Player" to="CanvasLayer/HealthPotions" method="_on_Player_player_stats_changed"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/ManaPotions" method="_on_Player_player_stats_changed"]
+[connection signal="player_stats_changed" from="Player" to="CanvasLayer/HealthPotions" method="_on_Player_player_stats_changed"]
+[connection signal="player_stats_changed" from="Player" to="CanvasLayer/XP" method="_on_Player_player_stats_changed"]
 [connection signal="animation_finished" from="Player/Sprite" to="Player" method="_on_Sprite_animation_finished"]
 [connection signal="animation_finished" from="CanvasLayer/DialoguePopup/AnimationPlayer" to="CanvasLayer/DialoguePopup" method="_on_AnimationPlayer_animation_finished"]
