@@ -7,16 +7,16 @@ var selected_menu
 
 func change_menu_color():
 	$Resume.color = Color.gray
-	$Restart.color = Color.gray
-	$Quit.color = Color.gray
+	$SaveGame.color = Color.gray
+	$MainMenu.color = Color.gray
 	
 	match selected_menu:
 		0: 
 			$Resume.color = Color.greenyellow
 		1:
-			$Restart.color = Color.greenyellow
+			$SaveGame.color = Color.greenyellow
 		2:
-			$Quit.color = Color.greenyellow
+			$MainMenu.color = Color.greenyellow
 			
 func _input(event):
 	if not visible:
@@ -48,10 +48,15 @@ func _input(event):
 					player.set_process_input(true)
 					hide()
 				1:
-					# restart
-					get_tree().change_scene("res://Scenes/Main.tscn")
+					# save game
+					get_node("/root/Root").save()
 					get_tree().paused = false
+					hide()
 				2:
-					# quit
-					get_tree().quit()
+					# main menu
+					get_node("/root/Root").queue_free()
+					get_tree().change_scene("res://GUI/StartScreen.tscn")
+					get_tree().paused = false
+
+
 					
