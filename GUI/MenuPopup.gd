@@ -51,6 +51,7 @@ func _input(event):
 					# save game
 					get_node("/root/Root").save()
 					get_tree().paused = false
+					player.set_process_input(true)
 					hide()
 				2:
 					# main menu
