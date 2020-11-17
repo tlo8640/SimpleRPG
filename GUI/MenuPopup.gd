@@ -21,6 +21,12 @@ func change_menu_color():
 func _input(event):
 	if not visible:
 		if Input.is_action_just_pressed("menu"):
+			# if playeer is dead, go to start screen
+			if player.health <= 0:
+				get_node("/root/Root").queue_free()
+				get_tree().change_scene("res://GUI/StartScreen.tscn")
+				get_tree().paused = false
+				return
 			# pause game
 			get_tree().paused = true
 			# reset popup

@@ -228,7 +228,6 @@ script = ExtResource( 2 )
 modulate = Color( 1, 0, 0, 1 )
 frames = SubResource( 1 )
 animation = "down_idle"
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -449,6 +448,15 @@ margin_right = 195.0
 margin_bottom = 95.0
 custom_fonts/font = ExtResource( 37 )
 text = "GAME OVER"
+align = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/GameOver"]
+margin_left = 67.0
+margin_top = 132.0
+margin_right = 256.0
+margin_bottom = 142.0
+custom_fonts/font = ExtResource( 37 )
+text = "PRESS ESCAP TO RETURN TO MAIN MENU"
 align = 1
 
 [node name="LevelPopup" type="Popup" parent="CanvasLayer"]
