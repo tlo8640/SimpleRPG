@@ -25,7 +25,7 @@ var last_direction = Vector2(0, 1)
 var bounce_countdown = 0
 var other_animation_playing = false
 
-# refernece tp potion scene
+# refernece to potion scene
 var potion_scene = preload("res://Entities/Potion/Potion.tscn")
 
 func _ready():
