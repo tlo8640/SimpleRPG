@@ -61,6 +61,16 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
+"frames": [ ExtResource( 14 ), ExtResource( 11 ), ExtResource( 5 ) ],
+"loop": false,
+"name": "down_fireball",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 19 ), ExtResource( 13 ), ExtResource( 8 ) ],
+"loop": false,
+"name": "left_fireball",
+"speed": 7.0
+}, {
 "frames": [ ExtResource( 1 ), ExtResource( 10 ), ExtResource( 5 ) ],
 "loop": false,
 "name": "down_attack",
@@ -121,19 +131,9 @@ animations = [ {
 "name": "up_walk",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 19 ), ExtResource( 13 ), ExtResource( 8 ) ],
-"loop": false,
-"name": "left_fireball",
-"speed": 7.0
-}, {
 "frames": [ ExtResource( 17 ), ExtResource( 4 ), ExtResource( 27 ) ],
 "loop": false,
 "name": "right_fireball",
-"speed": 7.0
-}, {
-"frames": [ ExtResource( 14 ), ExtResource( 11 ), ExtResource( 5 ) ],
-"loop": false,
-"name": "down_fireball",
 "speed": 7.0
 }, {
 "frames": [ ExtResource( 33 ), ExtResource( 29 ), ExtResource( 34 ) ],
@@ -229,7 +229,6 @@ script = ExtResource( 2 )
 modulate = Color( 1, 0, 0, 1 )
 frames = SubResource( 1 )
 animation = "down_idle"
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
