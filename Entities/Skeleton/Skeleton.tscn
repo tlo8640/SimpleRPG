@@ -130,6 +130,7 @@ tracks/0/keys = {
 script = ExtResource( 31 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+modulate = Color( 1, 0, 0, 1 )
 z_index = 1
 frames = SubResource( 1 )
 animation = "down_idle"

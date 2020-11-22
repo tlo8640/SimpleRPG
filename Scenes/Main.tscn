@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://Entities/Player/player_down_attack_1.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Player/Player.gd" type="Script" id=2]
@@ -57,9 +57,20 @@
 [ext_resource path="res://Entities/House/House.tscn" type="PackedScene" id=55]
 [ext_resource path="res://Scripts/SaveLoadGame.gd" type="Script" id=56]
 [ext_resource path="res://Entities/Potion/Potion.tscn" type="PackedScene" id=57]
+[ext_resource path="res://Entities/Fish/Fish.tscn" type="PackedScene" id=58]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
+"frames": [ ExtResource( 14 ), ExtResource( 11 ), ExtResource( 5 ) ],
+"loop": false,
+"name": "down_fireball",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 19 ), ExtResource( 13 ), ExtResource( 8 ) ],
+"loop": false,
+"name": "left_fireball",
+"speed": 7.0
+}, {
 "frames": [ ExtResource( 1 ), ExtResource( 10 ), ExtResource( 5 ) ],
 "loop": false,
 "name": "down_attack",
@@ -123,16 +134,6 @@ animations = [ {
 "frames": [ ExtResource( 17 ), ExtResource( 4 ), ExtResource( 27 ) ],
 "loop": false,
 "name": "right_fireball",
-"speed": 7.0
-}, {
-"frames": [ ExtResource( 19 ), ExtResource( 13 ), ExtResource( 8 ) ],
-"loop": false,
-"name": "left_fireball",
-"speed": 7.0
-}, {
-"frames": [ ExtResource( 14 ), ExtResource( 11 ), ExtResource( 5 ) ],
-"loop": false,
-"name": "down_fireball",
 "speed": 7.0
 }, {
 "frames": [ ExtResource( 33 ), ExtResource( 29 ), ExtResource( 34 ) ],
@@ -663,6 +664,9 @@ position = Vector2( 776, 144 )
 
 [node name="StartPotion2" parent="." instance=ExtResource( 57 )]
 position = Vector2( 72, 552 )
+
+[node name="Fish" parent="." instance=ExtResource( 58 )]
+position = Vector2( 248, 376 )
 [connection signal="player_level_up" from="Player" to="CanvasLayer/LevelPopup" method="_on_Player_player_level_up"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/Health" method="_on_Player_player_stats_changed"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/Mana" method="_on_Player_player_stats_changed"]

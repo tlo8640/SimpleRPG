@@ -6,8 +6,8 @@ var tree_tilemap
 
 # spawner variables
 export var spawn_area : Rect2 = Rect2(50, 150, 700, 700)
-export var max_skeletons = 40
-export var start_skeletons = 10
+export var max_skeletons = 2
+export var start_skeletons = 1
 var skeleton_count = 0
 var skeleton_scene = preload("res://Entities/Skeleton/Skeleton.tscn")
 
