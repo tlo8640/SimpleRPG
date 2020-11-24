@@ -46,27 +46,14 @@ func test_position(position : Vector2):
 	var no_trees = (cell_type_id != tilemap.tile_set.find_tile_by_name("Tree"))
 	
 		# check for house
-	var house_pos = house.get_position()
-	
-	#print("house_pos: " + str(house_pos))
-	#print("no_spawn_size.margin_top: " + str(no_spawn_area.margin_top))
-	#print("no_spawn_size.margin_left: " + str(no_spawn_area.margin_left))
-	#print("no_spawn_size.margin_bottom: " + str(no_spawn_area.margin_bottom))
-	#print("no_spawn_size.margin_right: " + str(no_spawn_area.margin_right))
-	
+	var house_pos = house.get_position()	
 	var no_inhouse_spawn = ( ! (\
 			position.x > (house_pos.x + no_spawn_area.margin_left) && \
 			position.x < (house_pos.x + no_spawn_area.margin_right) && \
 			position.y > (house_pos.y + no_spawn_area.margin_top) && \
 			position.y < (house_pos.y + no_spawn_area.margin_bottom)))
-	
-	print("skeleton_count" + str(skeleton_count))
-	if ! no_inhouse_spawn:
-		print("INHOUSE")
-	else:
-		print("NOT inhouse")
-	
-	# position is valid if both values are true 
+
+	# position is valid if all values are true 
 	return grass_or_sand and no_trees and no_inhouse_spawn
 	
 func _ready():
