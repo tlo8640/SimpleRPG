@@ -3,11 +3,13 @@ extends Node2D
 # nodes reference
 var tilemap
 var tree_tilemap
+var house
+var no_spawn_area
 
 # spawner variables
 export var spawn_area : Rect2 = Rect2(50, 150, 700, 700)
-export var max_skeletons = 2
-export var start_skeletons = 1
+export var max_skeletons = 80
+export var start_skeletons = 10
 var skeleton_count = 0
 var skeleton_scene = preload("res://Entities/Skeleton/Skeleton.tscn")
 
@@ -35,20 +37,31 @@ func test_position(position : Vector2):
 	# check for valid position of skeleton (grass or sand)
 	var cell_coord = tilemap.world_to_map(position)
 	var cell_type_id = tilemap.get_cellv(cell_coord)
-	var grass_or_sand = (cell_type_id == tilemap.tile_set.find_tile_by_name("Grass")) || (cell_type_id == tilemap.tile_set.find_tile_by_name("Sand"))
+	var grass_or_sand = (cell_type_id == tilemap.tile_set.find_tile_by_name("Grass")) || \
+			(cell_type_id == tilemap.tile_set.find_tile_by_name("Sand"))
 	
 	# check for tree
-	cell_coord = tilemap.world_to_map(position)
-	cell_type_id = tilemap.get_cellv(cell_coord)
+	#cell_coord = tilemap.world_to_map(position)
+	#cell_type_id = tilemap.get_cellv(cell_coord)
 	var no_trees = (cell_type_id != tilemap.tile_set.find_tile_by_name("Tree"))
 	
-	# position is valid if both values are true 
-	return grass_or_sand and no_trees
+		# check for house
+	var house_pos = house.get_position()	
+	var no_inhouse_spawn = ( ! (\
+			position.x > (house_pos.x + no_spawn_area.margin_left) && \
+			position.x < (house_pos.x + no_spawn_area.margin_right) && \
+			position.y > (house_pos.y + no_spawn_area.margin_top) && \
+			position.y < (house_pos.y + no_spawn_area.margin_bottom)))
+
+	# position is valid if all values are true 
+	return grass_or_sand and no_trees and no_inhouse_spawn
 	
 func _ready():
 	# get tilemaps refernce
 	tilemap = get_tree().root.get_node("Root/TileMap")
 	tree_tilemap = get_tree().root.get_node("Root/Tree TileMap")
+	house = get_tree().root.get_node("Root/House")
+	no_spawn_area = get_tree().root.get_node("Root/House/NoSpawnArea")
 	
 	# initialize random numbe rgenerator
 	rng.randomize()
