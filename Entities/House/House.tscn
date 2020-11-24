@@ -134,5 +134,15 @@ shape = SubResource( 14 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hideRoof"]
 position = Vector2( 0, 3 )
 shape = SubResource( 15 )
+
+[node name="NoSpawnArea" type="ColorRect" parent="."]
+margin_left = -61.0
+margin_top = -48.0
+margin_right = 63.0
+margin_bottom = 52.0
+color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="body_entered" from="hideRoof" to="." method="_on_hideRoof_body_entered"]
 [connection signal="body_exited" from="hideRoof" to="." method="_on_hideRoof_body_exited"]
